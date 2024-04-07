@@ -15,32 +15,36 @@ app = Dash(__name__)
 
 app.layout = html.Div([
     html.H1(children='Pregunta 4', style={'textAlign':'center'}),
-    dcc.Dropdown(salaries_df.experience_level.unique(), 'EN', id='ex-dropdown'),
+    dcc.Dropdown(salaries_df.experience_level.unique(), 'MI', id='ex-dropdown'),
+    # change slider to a top n
     dcc.Slider(0, 20, 1, value=10, marks={0:{'label':'0'}, 20:{'label':'20'}}, tooltip={"placement": "bottom", "always_visible": True}, id='threshold-slider'),
-    dcc.Graph(id='pie-graph'),
-    dcc.Graph(id='bar-graph'),
+    html.Div(children=[dcc.Graph(id='company-bar-graph'), dcc.Graph(id='company-pie-graph')], style={'display':'flex'}),
+    html.Div(children=[dcc.Graph(id='residence-bar-graph'), dcc.Graph(id='residence-pie-graph')], style={'display':'flex'}),
 ])
 
 
 @callback(
-    Output('bar-graph', 'figure'),
+    Output('company-bar-graph', 'figure'),
     [Input('threshold-slider', 'value'),
      Input('ex-dropdown', 'value')]
 )  
-def update_bar_graph(threshold, experience_level):
+def update_company_bar_graph(threshold, experience_level):
     dff = salaries_df[(salaries_df["experience_level"] == experience_level)]
 
     average_salary_company_location = dff.groupby(['company_location'])['salary_in_usd'].mean().reset_index().sort_values(by='salary_in_usd', ascending=False)
 
-    fig = px.histogram(average_salary_company_location, y='salary_in_usd', x='company_location', title=f'Company Location Pie Chart')
+    fig = px.histogram(average_salary_company_location, y='salary_in_usd', x='company_location')
+    fig.update_layout(title_text=f'Company Location Bar Chart', title_x=0.5)
+    fig.update_xaxes(title_text="Company Location")
+    fig.update_yaxes(title_text="Average Salary in USD")
     return fig
 
 @callback(
-    Output('pie-graph', 'figure'),
+    Output('company-pie-graph', 'figure'),
     [Input('threshold-slider', 'value'),
      Input('ex-dropdown', 'value')]
 )  
-def update_pie_graph(threshold, experience_level):
+def update_company_pie_graph(threshold, experience_level):
     dff = salaries_df[(salaries_df["experience_level"] == experience_level)]
     count_df = pd.DataFrame(dff.company_location.value_counts()).reset_index(inplace=False)
 
@@ -51,9 +55,49 @@ def update_pie_graph(threshold, experience_level):
     filtered_list.append(other_row)
 
     other_df = pd.DataFrame(filtered_list)
-    fig = px.pie(other_df, values='count', names='company_location', title=f'Company Location Pie Chart')
+    fig = px.pie(other_df, values='count', names='company_location')
+    fig.update_layout(title_text=f'Company Location Pie Chart', title_x=0.5)
     return fig
 
+@callback(
+    Output('residence-bar-graph', 'figure'),
+    [Input('threshold-slider', 'value'),
+     Input('ex-dropdown', 'value')]
+)  
+def update_residence_bar_graph(threshold, experience_level):
+    dff = salaries_df[(salaries_df["experience_level"] == experience_level)]
+
+    average_salary_residence = dff.groupby(['employee_residence'])['salary_in_usd'].mean().reset_index().sort_values(by='salary_in_usd', ascending=False)
+
+    fig = px.histogram(average_salary_residence, y='salary_in_usd', x='employee_residence')
+    
+    #style
+    fig.update_layout(title_text=f'Employee Residence Bar Chart', title_x=0.5)
+    return fig
+
+@callback(
+    Output('residence-pie-graph', 'figure'),
+    [Input('threshold-slider', 'value'),
+     Input('ex-dropdown', 'value')]
+)  
+def update_residence_pie_graph(threshold, experience_level):
+    dff = salaries_df[(salaries_df["experience_level"] == experience_level)]
+    count_df = pd.DataFrame(dff.employee_residence.value_counts()).reset_index(inplace=False)
+
+    other_count = count_df[count_df['count'] < threshold]['count'].sum()
+
+    other_row = {'employee_residence': 'OTHER', 'count': other_count}
+    filtered_list = count_df[count_df['count'] >= threshold].to_dict('records')
+    filtered_list.append(other_row)
+
+    other_df = pd.DataFrame(filtered_list)
+    fig = px.pie(other_df, values='count', names='employee_residence')
+
+    #style
+    fig.update_layout(title_text=f'Employee Residence Pie Chart', title_x=0.5)
+    fig.update_xaxes(title_text="Employee Residence")
+    fig.update_yaxes(title_text="Average Salary in USD")
+    return fig
 
 
 if __name__ == '__main__':
