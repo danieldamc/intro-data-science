@@ -2,8 +2,7 @@ from dash import Dash, html, dash_table, callback, Output, Input, dcc
 import plotly.express as px
 import pandas as pd
 
-salaries_df = pd.read_csv('Salaries.csv')
-salaries_df = salaries_df.drop(columns=['Unnamed: 0'])
+salaries_df = pd.read_csv('Salaries.csv', index_col=0)
 
 # Impacto del tipo de empleo en los salarios: Explore cómo los tipos de empleo 
 # (a tiempo parcial, a tiempo completo, por contrato, autónomo) influyen en los

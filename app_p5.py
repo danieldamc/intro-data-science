@@ -7,9 +7,7 @@ from dash import Dash, html, dash_table, callback, Output, Input, dcc
 import plotly.express as px
 import pandas as pd
 
-salaries_df = pd.read_csv('Salaries.csv')
-salaries_df = salaries_df.drop(columns=['Unnamed: 0'])
-
+salaries_df = pd.read_csv('Salaries.csv', index_col=0)
 app = Dash(__name__)
 
 app.layout = html.Div([
