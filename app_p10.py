@@ -26,7 +26,7 @@ def update_graph(company):
     remote_ratio_df = dff['remote_ratio'].value_counts().reset_index()
     #order the values in the remote_ratio column
     remote_ratio_df = remote_ratio_df.sort_values(by='remote_ratio')
-    print(remote_ratio_df)
+    #print(remote_ratio_df)
     fig = px.pie(remote_ratio_df, values='count', names='remote_ratio', title=f'Proportion of Remote Work in {company} for workers living in said location', hole=0.3, color_discrete_sequence=px.colors.sequential.RdBu)
 
     return fig
