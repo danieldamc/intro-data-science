@@ -1,0 +1,19 @@
+from dash import Dash, html, dash_table, callback, Output, Input, dcc
+import plotly.express as px
+import pandas as pd
+
+salaries_df = pd.read_csv('Salaries.csv', index_col=0)
+
+"""
+Análisis de conversión de moneda: Evalúe el impacto de las fluctuaciones monetarias en los salarios 
+de la ciencia de datos comparando los salarios en diferentes monedas con sus valores equivalentes en USD. 
+Identifique cualquier diferencia significativa en los niveles salariales después de la conversión de moneda.
+"""
+
+app = Dash(__name__)
+
+app.layout = html.Div([
+    html.H1(children='Grafico de Linea', style={'textAlign':'center'}),
+    dcc.Dropdown(salaries_df.experience_level.unique(), 'MI', id='ex-dropdown'),
+    dcc.Graph(id='bar-graph'),
+])
