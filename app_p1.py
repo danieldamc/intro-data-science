@@ -50,7 +50,7 @@ def update_graph(experience_level):
     dfff = pd.DataFrame(dfff)
 
     
-    fig = px.line(dfff, x='work_year', y='salary_in_usd', color="employee_residence",markers=True, title=f'Average Salary Trend globally')
+    fig = px.line(dfff, x='work_year', y='salary_in_usd', color="employee_residence",markers=True)
     fig.update_layout(xaxis=dict(tickmode='linear', dtick=1))
     fig.update_yaxes(range=[0, dfff['salary_in_usd'].max() + 20000])
     fig.update_yaxes(tickmode='linear', dtick=50000)
@@ -62,6 +62,7 @@ def update_graph(experience_level):
     #add a title for axis
     fig.update_xaxes(title_text="Work Year")
     fig.update_yaxes(title_text="Average Salary in USD")
+    fig.update_layout(title_text=f'Average Salary Trend globally', title_x=0.5)
 
     return fig
 

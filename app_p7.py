@@ -42,6 +42,14 @@ def top10_bar_graph(experience_level, company_location):
     fig.update_xaxes(title_text="Job Title")
     fig.update_yaxes(title_text="Average Salary in USD")
     fig.update_layout(title_text=f'10 highest paying job titles', title_x=0.5)
+    fig.update_layout(
+        autosize=False,
+        width=900,
+        height=700,
+    )
+    
+    fig.update_traces(marker_color='#00cc96')
+
     return fig
 
 @callback(
@@ -65,6 +73,13 @@ def bottom10_bar_graph(experience_level, company_location):
     fig.update_xaxes(title_text="Job Title")
     fig.update_yaxes(title_text="Average Salary in USD")
     fig.update_layout(title_text=f'10 lowest paying job titles', title_x=0.5)
+    fig.update_layout(
+        autosize=False,
+        width=900,
+        height=700,
+    )
+    #change color of the bars
+    fig.update_traces(marker_color='#00cc96')
     return fig
 
 if __name__ == '__main__':

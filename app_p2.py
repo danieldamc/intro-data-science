@@ -31,18 +31,19 @@ def update_graph(company):
 
     average_salary_per_year = dff.groupby(['work_year', 'experience_level'])['salary_in_usd'].mean().reset_index()
     
-    fig = px.line(average_salary_per_year, x='work_year', y='salary_in_usd', color = 'experience_level', title=f'Average Salary Trend for {company}')
+    fig = px.line(average_salary_per_year, x='work_year', y='salary_in_usd', color = 'experience_level', markers=True)
     fig.update_layout(xaxis=dict(tickmode='linear', dtick=1))
     fig.update_yaxes(range=[0, average_salary_per_year['salary_in_usd'].max() + 20000])
     fig.update_yaxes(tickmode='linear', dtick=50000)
     fig.update_layout(
         autosize=False,
-        width=1600,
-        height=1000,
+        width=1800,
+        height=720,
     )
     #add a title for axis
     fig.update_xaxes(title_text="Work Year")
     fig.update_yaxes(title_text="Average Salary in USD")
+    fig.update_layout(title_text=f'Average Salary Trend per experience level in {company}', title_x=0.5)
 
     return fig
 

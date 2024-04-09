@@ -29,10 +29,8 @@ def update_graph(company):
     dff = salaries_df[(salaries_df["company_location"] == company)] 
 
     average_salary_per_size = dff.groupby(['work_year', 'company_size'])['salary_in_usd'].mean().reset_index()
-    print(average_salary_per_size)
-
     
-    fig = px.bar(average_salary_per_size, x='work_year', y='salary_in_usd', color='company_size', title=f'Average Salary per company size in {company}', barmode='group')
+    fig = px.bar(average_salary_per_size, x='work_year', y='salary_in_usd', color='company_size', barmode='group')
 
     fig.update_layout(xaxis=dict(tickmode='linear', dtick=1))
     fig.update_yaxes(range=[0, max(average_salary_per_size['salary_in_usd'])*1.1])
@@ -46,6 +44,8 @@ def update_graph(company):
     
     fig.update_xaxes(title_text="Work Year")
     fig.update_yaxes(title_text="Average Salary in USD")
+    
+    fig.update_layout(title_text=f'Average Salary per company size in {company}', title_x=0.5)
 
     return fig
 

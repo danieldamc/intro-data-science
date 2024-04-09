@@ -46,6 +46,14 @@ def line_graph(salary_currency):
     fig.update_xaxes(title_text="Work Year")
     fig.update_yaxes(title_text="Convertion Rate")
     fig.update_layout(title_text=f'Convertion Rate of Salary', title_x=0.5)
+    #change tick mode to linear
+    fig.update_xaxes(tickmode='linear', dtick=1)
+
+    fig.update_layout(
+        autosize=False,
+        width=1800,
+        height=720,
+    )
     return fig
 
 if __name__ == '__main__':
