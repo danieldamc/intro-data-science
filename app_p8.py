@@ -9,6 +9,9 @@ not_usd_salaries_df = salaries_df[salaries_df['salary_currency'] != 'USD'].reset
 not_usd_salaries_df['convertion_rate'] = not_usd_salaries_df['salary_in_usd']/not_usd_salaries_df['salary']
 convertion_rate_df = pd.DataFrame(not_usd_salaries_df.groupby(['salary_currency', 'work_year'])['convertion_rate'].mean().reset_index())
 
+currencies = np.concatenate([salaries_df.salary_currency.unique(), ['ALL']])
+currencies = currencies[currencies != 'USD']
+
 
 """
 Análisis de conversión de moneda: Evalúe el impacto de las fluctuaciones monetarias en los salarios 
@@ -21,7 +24,8 @@ app = Dash(__name__)
 app.layout = html.Div([
     html.H1(children='Pregunta 8', style={'textAlign':'center'}),
     html.P(children='Análisis de conversión de moneda: Evalúe el impacto de las fluctuaciones monetarias en los salarios de la ciencia de datos comparando los salarios en diferentes monedas con sus valores equivalentes en USD. Identifique cualquier diferencia significativa en los niveles salariales después de la conversión de moneda.', style={'textAlign':'center'}),
-    dcc.Dropdown(np.concatenate([salaries_df.salary_currency.unique(), ['ALL']]), 'ALL', id='salary-dropdown'),
+    html.Label(['Moneda:'], style={'font-weight': 'bold', "text-align": "center"}),
+    dcc.Dropdown(currencies, 'ALL', id='salary-dropdown'),
     dcc.Graph(id='line-graph'),
 ])
 
@@ -36,9 +40,9 @@ def line_graph(salary_currency):
     else:
         dff = convertion_rate_df
 
-    print(dff)
+    #print(dff)
 
-    fig = px.line(dff, y='convertion_rate', x='work_year', color='salary_currency')
+    fig = px.line(dff, y='convertion_rate', x='work_year', color='salary_currency',  markers=True)
     fig.update_xaxes(title_text="Work Year")
     fig.update_yaxes(title_text="Convertion Rate")
     fig.update_layout(title_text=f'Convertion Rate of Salary', title_x=0.5)
