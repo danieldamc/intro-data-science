@@ -14,6 +14,7 @@ app = Dash(__name__)
 
 app.layout = html.Div([
     html.H1(children='Pregunta 4', style={'textAlign':'center'}),
+    html.P(children='Disparidades salariales regionales: Examine cómo varían los salarios entre las diferentes residencias de los empleados y las ubicaciones de las empresas (países). Identifique regiones/países donde los científicos de datos tienden a ganar salarios más altos en comparación con otros.', style={'textAlign':'center'}),
     dcc.Dropdown(salaries_df.experience_level.unique(), 'MI', id='ex-dropdown'),
     # change slider to a top n
     dcc.Slider(0, 20, 1, value=10, marks={0:{'label':'0'}, 20:{'label':'20'}}, tooltip={"placement": "bottom", "always_visible": True}, id='threshold-slider'),

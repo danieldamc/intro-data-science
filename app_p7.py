@@ -13,7 +13,7 @@ Identifique qué puestos de trabajo suelen exigir salarios más altos y cuáles 
 app = Dash(__name__)
 
 app.layout = html.Div([
-    html.H1(children='Pregunta 4', style={'textAlign':'center'}),
+    html.H1(children='Pregunta 7', style={'textAlign':'center'}),
     html.P(children='Títulos de trabajo y salario: Analizar la relación entre puestos de trabajo específicos y salarios. Identifique qué puestos de trabajo suelen exigir salarios más altos y cuáles están asociados con salarios más bajos.', style={'textAlign':'center'}),
     dcc.Dropdown(np.concatenate([salaries_df.company_location.unique(), ['Global']]), 'Global', id='company-dropdown'),
     dcc.Dropdown(np.concatenate([salaries_df.experience_level.unique(), ['Global']]), 'Global', id='ex-dropdown'),

@@ -4,14 +4,17 @@ import pandas as pd
 
 salaries_df = pd.read_csv('Salaries.csv', index_col=0)
 
-# Impacto del tipo de empleo en los salarios: Explore cómo los tipos de empleo 
-# (a tiempo parcial, a tiempo completo, por contrato, autónomo) influyen en los
-# salarios. Analice si ciertos tipos de empleo tienden a ofrecer salarios más altos que otro.
+"""
+Impacto del tipo de empleo en los salarios: Explore cómo los tipos de empleo 
+(a tiempo parcial, a tiempo completo, por contrato, autónomo) influyen en los
+salarios. Analice si ciertos tipos de empleo tienden a ofrecer salarios más altos que otro.
+"""
 
 app = Dash(__name__)
 
 app.layout = html.Div([
     html.H1(children='Pregunta 3', style={'textAlign':'center'}),
+    html.P(children='Impacto del tipo de empleo en los salarios: Explore cómo los tipos de empleo (a tiempo parcial, a tiempo completo, por contrato, autónomo) influyen en los salarios. Analice si ciertos tipos de empleo tienden a ofrecer salarios más altos que otro.', style={'textAlign':'center'}),
     dcc.Dropdown(salaries_df.company_location.unique(), 'US', id='company-dropdown'),
     dcc.Graph(id='line-graph'),
     dcc.Graph(id='pie-graph'),

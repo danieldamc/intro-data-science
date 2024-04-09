@@ -4,14 +4,17 @@ import pandas as pd
 
 salaries_df = pd.read_csv('Salaries.csv', index_col=0)
 
-# Tendencias salariales a lo largo del tiempo: Analice cómo han evolucionado los salarios en 
-# ciencia de datos a lo largo de los años examinando la distribución de los salarios en 
-# diferentes años laborales. Identifique cualquier tendencia o patrón significativo en el crecimiento o disminución del salario a lo largo del tiempo.
+"""
+Tendencias salariales a lo largo del tiempo: Analice cómo han evolucionado los salarios en 
+ciencia de datos a lo largo de los años examinando la distribución de los salarios en 
+diferentes años laborales. Identifique cualquier tendencia o patrón significativo en el crecimiento o disminución del salario a lo largo del tiempo.
+"""
 
 app = Dash(__name__)
 
 app.layout = html.Div([
-    html.H1(children='Grafico de Linea', style={'textAlign':'center'}),
+    html.H1(children='Pregunta 1', style={'textAlign':'center'}),
+    html.P(children='Tendencias salariales a lo largo del tiempo: Analice cómo han evolucionado los salarios en ciencia de datos a lo largo de los años examinando la distribución de los salarios en diferentes años laborales. Identifique cualquier tendencia o patrón significativo en el crecimiento o disminución del salario a lo largo del tiempo.', style={'textAlign':'center'}),
     dcc.Dropdown(salaries_df.company_location.unique(), 'US', id='company-dropdown'),
     dcc.Graph(id='graph-content')
 ])

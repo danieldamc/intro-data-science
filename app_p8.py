@@ -19,7 +19,8 @@ Identifique cualquier diferencia significativa en los niveles salariales despué
 app = Dash(__name__)
 
 app.layout = html.Div([
-    html.H1(children='Grafico de Linea', style={'textAlign':'center'}),
+    html.H1(children='Pregunta 8', style={'textAlign':'center'}),
+    html.P(children='Análisis de conversión de moneda: Evalúe el impacto de las fluctuaciones monetarias en los salarios de la ciencia de datos comparando los salarios en diferentes monedas con sus valores equivalentes en USD. Identifique cualquier diferencia significativa en los niveles salariales después de la conversión de moneda.', style={'textAlign':'center'}),
     dcc.Dropdown(np.concatenate([salaries_df.salary_currency.unique(), ['ALL']]), 'ALL', id='salary-dropdown'),
     dcc.Graph(id='line-graph'),
 ])

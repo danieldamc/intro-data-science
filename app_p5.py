@@ -1,17 +1,20 @@
-'''Trabajo Remoto y Salario: Investigar la relación entre el alcance del trabajo remoto 
-(sin trabajo remoto, parcialmente remoto, totalmente remoto) y los salarios. 
-Analice si las personas que trabajan de forma remota tienden a ganar más o menos
- en comparación con quienes trabajan en entornos de oficina tradicionales.'''
-
 from dash import Dash, html, dash_table, callback, Output, Input, dcc
 import plotly.express as px
 import pandas as pd
+
+'''
+Trabajo Remoto y Salario: Investigar la relación entre el alcance del trabajo remoto 
+(sin trabajo remoto, parcialmente remoto, totalmente remoto) y los salarios. 
+Analice si las personas que trabajan de forma remota tienden a ganar más o menos
+en comparación con quienes trabajan en entornos de oficina tradicionales.
+'''
 
 salaries_df = pd.read_csv('Salaries.csv', index_col=0)
 app = Dash(__name__)
 
 app.layout = html.Div([
-    html.H1(children='Grafico de Barra', style={'textAlign':'center'}),
+    html.H1(children='Pregunta 5', style={'textAlign':'center'}),
+    html.P(children='Trabajo Remoto y Salario: Investigar la relación entre el alcance del trabajo remoto (sin trabajo remoto, parcialmente remoto, totalmente remoto) y los salarios. Analice si las personas que trabajan de forma remota tienden a ganar más o menos en comparación con quienes trabajan en entornos de oficina tradicionales.', style={'textAlign':'center'}),
     dcc.Dropdown(salaries_df.company_location.unique(), 'US', id='company-dropdown'),
     dcc.Graph(id='graph-content')
 ])
