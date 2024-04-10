@@ -1,5 +1,6 @@
 from dash import Dash, html, dash_table, callback, Output, Input, dcc
 import plotly.express as px
+import numpy as np
 import pandas as pd
 
 salaries_df = pd.read_csv('Salaries.csv', index_col=0)
@@ -15,7 +16,7 @@ app = Dash(__name__)
 app.layout = html.Div([
     html.H1(children='Pregunta 2', style={'textAlign':'center'}),
     html.P(children='Disparidades salariales entre niveles de experiencia: Investigue la relación entre los niveles de experiencia (nivel inicial, nivel medio, nivel superior, nivel ejecutivo) y los salarios para cada nivel de experiencia. Compare los salarios promedio para cada nivel de experiencia.', style={'textAlign':'center'}),
-    dcc.Dropdown(salaries_df.company_location.unique(), 'US', id='company-dropdown'),
+    dcc.Dropdown(np.concatenate([salaries_df.company_location.unique(), ['GLOBAL']]), 'GLOBAL', id='company-dropdown'),
     dcc.Graph(id='graph-content')
 ])
 
@@ -25,8 +26,10 @@ app.layout = html.Div([
     [Input('company-dropdown', 'value')]
 )  
 def update_graph(company):
-    dff = salaries_df[(salaries_df["company_location"] == company)] 
-
+    if company != 'GLOBAL':
+        dff = salaries_df[salaries_df["company_location"] == company]
+    else:
+        dff = salaries_df
     #print(dff[['work_year', 'salary_in_usd']])
 
     average_salary_per_year = dff.groupby(['work_year', 'experience_level'])['salary_in_usd'].mean().reset_index()
