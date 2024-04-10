@@ -33,8 +33,8 @@ def update_graph(company):
     
     #dff = salaries_df[(salaries_df["company_location"] == company)]
     dfff = dff.groupby(['company_size', 'experience_level'])['salary_in_usd'].mean().reset_index().sort_values(by='company_size', ascending=False)
-    print(dfff)
-    fig = px.bar(dfff, x='company_size', y='salary_in_usd', color='experience_level', barmode='group')
+    #print(dfff)
+    fig = px.bar(dfff, x='company_size', y='salary_in_usd', color='experience_level', barmode='group')#
     fig.update_layout(
         autosize=False,
         width=1600,
