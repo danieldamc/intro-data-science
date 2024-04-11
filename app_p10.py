@@ -34,7 +34,7 @@ def update_graph(company):
     
     #dff = salaries_df[(salaries_df["company_location"] == company)]
     dfff = dff.groupby(['experience_level', 'company_size']).size().reset_index(name='value').sort_values(by='company_size', ascending=False)
-    print(dfff)
+    #print(dfff)
     fig = px.bar(dfff, x='company_size', y='value', color='experience_level', barmode='group')
     fig.update_layout(xaxis=dict(tickmode='linear', dtick=1))
     fig.update_yaxes(range=[0, dfff['value'].max()*1.1])
