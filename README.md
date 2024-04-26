@@ -2,7 +2,7 @@
 
 Este repositorio contiene tareas del ramo Introducción a la Ciencia de Datos
 
-# Integrantes
+## Integrantes
 
 Daniel Alejandro Martínez Castro
 Tomás Santiago Nieto Guerrero
